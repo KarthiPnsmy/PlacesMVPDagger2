@@ -2,8 +2,10 @@ package com.titut.placesmvp.dagger;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import com.titut.placesmvp.utils.PlacesCache;
+import com.titut.placesmvp.utils.SharedPrefsHelper;
 
 import javax.inject.Singleton;
 
@@ -19,21 +21,13 @@ public class AppModule {
 
     private Application application;
 
-    private PlacesCache cache = new PlacesCache();
-
     public AppModule(Application application){
         this.application = application;
     }
 
-    @Singleton
     @Provides
+    @Singleton
     public Context provideApplication() {
         return application;
     }
-
-//    @Singleton
-//    @Provides
-//    PlacesCache providePlacesCache() {
-//        return cache;
-//    }
 }

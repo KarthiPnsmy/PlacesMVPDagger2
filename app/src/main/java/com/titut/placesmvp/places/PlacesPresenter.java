@@ -1,6 +1,7 @@
 package com.titut.placesmvp.places;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.titut.placesmvp.PlacesApplication;
 import com.titut.placesmvp.dagger.ActivityContext;
@@ -10,6 +11,7 @@ import com.titut.placesmvp.model.PlaceResponse;
 import com.titut.placesmvp.datasource.PlacesApi;
 import com.titut.placesmvp.utils.Constants;
 import com.titut.placesmvp.utils.PlacesCache;
+import com.titut.placesmvp.utils.SharedPrefsHelper;
 
 import java.util.List;
 
@@ -39,11 +41,17 @@ public class PlacesPresenter implements PlacesContract.Presenter {
     Retrofit retrofit;
 
     @Inject
+    SharedPrefsHelper mSharedPrefsHelper;
+
+    @Inject
     public PlacesPresenter(PlacesCache placesCache, PlacesContract.View view, @ActivityContext Context context) {
         this.mView = view;
 
         AppComponent appComponent = ((PlacesApplication) context.getApplicationContext()).getAppComponent();
         appComponent.inject(this);
+
+        Log.d("@@##", "Last visited page = "+mSharedPrefsHelper.get(SharedPrefsHelper.PREF_KEY_LAST_VISITED_ACTIVITY, "NA"));
+        mSharedPrefsHelper.put(SharedPrefsHelper.PREF_KEY_LAST_VISITED_ACTIVITY, "Places Listing");
 
         mView.setPresenter(this);
     }

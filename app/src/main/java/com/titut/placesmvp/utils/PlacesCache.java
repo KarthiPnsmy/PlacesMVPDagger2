@@ -23,14 +23,6 @@ public class PlacesCache extends HashMap<String, Object> {
 
     }
 
-    public static PlacesCache getInstance() {
-        if (cache == null) {
-            cache = new PlacesCache();
-        }
-
-        return cache;
-    }
-
     public HashMap<String, Place> getPlaceDetailCache(){
         return placeDetailCache;
     }

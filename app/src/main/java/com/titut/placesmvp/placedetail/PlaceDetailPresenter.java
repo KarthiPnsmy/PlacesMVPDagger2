@@ -11,6 +11,7 @@ import com.titut.placesmvp.model.PlaceDetailResponse;
 import com.titut.placesmvp.datasource.PlacesApi;
 import com.titut.placesmvp.utils.Constants;
 import com.titut.placesmvp.utils.PlacesCache;
+import com.titut.placesmvp.utils.SharedPrefsHelper;
 
 import java.util.HashMap;
 
@@ -39,11 +40,17 @@ public class PlaceDetailPresenter implements PlaceDetailContract.Presenter {
     PlacesCache mPlacesCache;
 
     @Inject
+    SharedPrefsHelper mSharedPrefsHelper;
+
+    @Inject
     public PlaceDetailPresenter(PlaceDetailContract.View view, @ActivityContext Context context, PlacesCache placesCache) {
         this.mView = view;
 
         AppComponent appComponent = ((PlacesApplication) context.getApplicationContext()).getAppComponent();
         appComponent.inject(this);
+
+        Log.d("@@##", "Last visited page = "+mSharedPrefsHelper.get(SharedPrefsHelper.PREF_KEY_LAST_VISITED_ACTIVITY, "NA"));
+        mSharedPrefsHelper.put(SharedPrefsHelper.PREF_KEY_LAST_VISITED_ACTIVITY, "Place Detail");
 
         this.mView.setPresenter(this);
     }
