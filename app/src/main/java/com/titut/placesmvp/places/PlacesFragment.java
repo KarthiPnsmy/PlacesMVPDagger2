@@ -1,6 +1,7 @@
 package com.titut.placesmvp.places;
 
 import android.app.ProgressDialog;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,9 +13,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.titut.placesmvp.PlacesApplication;
+import com.titut.placesmvp.dagger.AppComponent;
 import com.titut.placesmvp.model.Place;
 import com.titut.placesmvp.R;
 import com.titut.placesmvp.placedetail.PlaceDetailActivity;
+import com.titut.placesmvp.utils.SharedPrefsHelper;
 
 import java.util.List;
 
@@ -30,8 +34,10 @@ public class PlacesFragment extends Fragment implements PlacesContract.View {
     private RecyclerView mPlacesRecyclerView;
     private ProgressDialog mProgressDialog;
 
-    @Inject
     PlacesContract.Presenter mPresenter;
+
+    @Inject
+    SharedPrefsHelper mSharedPrefsHelper;
 
     public PlacesFragment(){
 
@@ -39,6 +45,14 @@ public class PlacesFragment extends Fragment implements PlacesContract.View {
 
     public static PlacesFragment newInstance() {
         return new PlacesFragment();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        AppComponent appComponent = ((PlacesApplication) getActivity().getApplicationContext()).getAppComponent();
+        appComponent.inject(this);
     }
 
     @Override
@@ -53,10 +67,10 @@ public class PlacesFragment extends Fragment implements PlacesContract.View {
         mProgressDialog = new ProgressDialog(getActivity());
         mProgressDialog.setMessage("Loading...");
 
-        //mPresenter = new PlacesPresenter(this);
+        Log.d("@@##", "PlacesFragment >> last visited "+mSharedPrefsHelper.get(SharedPrefsHelper.PREF_KEY_LAST_VISITED_ACTIVITY, "NA"));
+
         mPresenter.loadPlaces();
 
-        Log.d("@@##", "mPresenter = "+mPresenter);
         return mRootView;
     }
 

@@ -3,6 +3,7 @@ package com.titut.placesmvp.dagger;
 import android.content.SharedPreferences;
 
 import com.titut.placesmvp.datasource.PlacesApi;
+import com.titut.placesmvp.placedetail.PlaceDetailFragment;
 import com.titut.placesmvp.placedetail.PlaceDetailPresenter;
 import com.titut.placesmvp.places.PlacesActivity;
 import com.titut.placesmvp.places.PlacesContract;
@@ -30,4 +31,6 @@ public interface AppComponent {
 
     void inject(PlacesPresenter target);
     void inject(PlaceDetailPresenter target);
+    void inject(PlacesFragment target);
+    void inject(PlaceDetailFragment target);
 }

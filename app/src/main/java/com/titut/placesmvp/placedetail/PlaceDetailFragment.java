@@ -4,14 +4,20 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.titut.placesmvp.PlacesApplication;
+import com.titut.placesmvp.dagger.AppComponent;
 import com.titut.placesmvp.model.Place;
 import com.titut.placesmvp.R;
+import com.titut.placesmvp.utils.SharedPrefsHelper;
+
+import javax.inject.Inject;
 
 /**
  * Created by karthi.ponnusamy on 31/5/17.
@@ -27,6 +33,8 @@ public class PlaceDetailFragment extends Fragment implements PlaceDetailContract
     private TextView mTextViewPlaceAddress;
     private TextView mTextViewPlacePhoneNo;
 
+    @Inject
+    SharedPrefsHelper mSharedPrefsHelper;
 
     private PlaceDetailContract.Presenter mPresenter;
     public PlaceDetailFragment(){
@@ -46,6 +54,9 @@ public class PlaceDetailFragment extends Fragment implements PlaceDetailContract
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        AppComponent appComponent = ((PlacesApplication) getActivity().getApplicationContext()).getAppComponent();
+        appComponent.inject(this);
+
         mPlaceId = getArguments().getString(PlaceDetailActivity.PLACE_ID);
     }
 
@@ -61,7 +72,8 @@ public class PlaceDetailFragment extends Fragment implements PlaceDetailContract
         mProgressDialog = new ProgressDialog(getActivity());
         mProgressDialog.setMessage("Loading...");
 
-        //mPresenter = new PlaceDetailPresenter(this);
+        Log.d("@@##", "PlaceDetailFragment >> last visited "+mSharedPrefsHelper.get(SharedPrefsHelper.PREF_KEY_LAST_VISITED_ACTIVITY, "NA"));
+
         mPresenter.loadPlace(mPlaceId);
 
         return mRootView;

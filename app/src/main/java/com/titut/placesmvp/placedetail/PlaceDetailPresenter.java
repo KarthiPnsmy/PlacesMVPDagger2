@@ -49,7 +49,7 @@ public class PlaceDetailPresenter implements PlaceDetailContract.Presenter {
         AppComponent appComponent = ((PlacesApplication) context.getApplicationContext()).getAppComponent();
         appComponent.inject(this);
 
-        Log.d("@@##", "Last visited page = "+mSharedPrefsHelper.get(SharedPrefsHelper.PREF_KEY_LAST_VISITED_ACTIVITY, "NA"));
+        Log.d("@@##", "PlaceDetailPresenter >> last visited "+mSharedPrefsHelper.get(SharedPrefsHelper.PREF_KEY_LAST_VISITED_ACTIVITY, "NA"));
         mSharedPrefsHelper.put(SharedPrefsHelper.PREF_KEY_LAST_VISITED_ACTIVITY, "Place Detail");
 
         this.mView.setPresenter(this);

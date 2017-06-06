@@ -50,7 +50,7 @@ public class PlacesPresenter implements PlacesContract.Presenter {
         AppComponent appComponent = ((PlacesApplication) context.getApplicationContext()).getAppComponent();
         appComponent.inject(this);
 
-        Log.d("@@##", "Last visited page = "+mSharedPrefsHelper.get(SharedPrefsHelper.PREF_KEY_LAST_VISITED_ACTIVITY, "NA"));
+        Log.d("@@##", "PlacesPresenter >> last visited "+mSharedPrefsHelper.get(SharedPrefsHelper.PREF_KEY_LAST_VISITED_ACTIVITY, "NA"));
         mSharedPrefsHelper.put(SharedPrefsHelper.PREF_KEY_LAST_VISITED_ACTIVITY, "Places Listing");
 
         mView.setPresenter(this);
